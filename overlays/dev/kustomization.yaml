@@ -7,4 +7,4 @@ bases:
 images:
   - name: quarkus
     newName: image-registry.openshift-image-registry.svc:5000/atp-dev/code-with-quarkus
-    newTag: pipeline@tekton.dev
+    newTag: 1.0.0
