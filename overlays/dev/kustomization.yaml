@@ -7,4 +7,4 @@ bases:
 images:
   - name: quarkus
     newName: image-registry.openshift-image-registry.svc:5000/atp-dev/code-with-quarkus
-    newTag: 0.0.0
+    newTag: 1.0.0
