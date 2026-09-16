@@ -7,7 +7,9 @@ metadata:
     service: code-with-quarkus
 spec:
   parentRefs:
-    - name: ingress-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: ingress-gateway
       namespace: api-gateway
       sectionName: api
   hostnames:
@@ -35,5 +37,7 @@ spec:
             type: PathPrefix
             value: "/person/"
       backendRefs:
-        - name: code-with-quarkus
+        - group: ""
+          kind: Service
+          name: code-with-quarkus
           port: 8080
