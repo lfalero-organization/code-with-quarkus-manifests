@@ -41,3 +41,4 @@ spec:
           kind: Service
           name: code-with-quarkus
           port: 8080
+          weight: 1
