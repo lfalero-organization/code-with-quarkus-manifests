@@ -3,6 +3,9 @@ kind: Kustomization
 
 bases:
   - ../../base
+  - http-route.yaml
+  - auth-policy.yaml
+  - dns-healthcheck.yaml
 
 images:
   - name: quarkus
