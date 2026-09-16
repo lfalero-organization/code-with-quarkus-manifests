@@ -1,0 +1,12 @@
+apiVersion: kuadrant.io/v1alpha1
+kind: DNSHealthCheckProbe
+metadata:
+  name: code-with-quarkus-healthcheck
+spec:
+  # address: bgbrep3.ng.impervadns.net
+  hostname: quarkus.luisfalero.site
+  path: /q/health
+  port: 443
+  protocol: HTTPS
+  failureThreshold: 3
+  interval: 1m0s

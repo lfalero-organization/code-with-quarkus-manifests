@@ -1,0 +1,59 @@
+apiVersion: kuadrant.io/v1
+kind: AuthPolicy
+metadata:
+  name: code-with-quarkus-auth
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: code-with-quarkus-route
+  defaults:
+    strategy: merge
+    patterns:
+      "pattern-reader":
+        allOf:
+          - selector: auth.identity.realm_access.roles
+            operator: incl
+            value: api-reader
+      "pattern-admin":
+        allOf:
+          - selector: auth.identity.realm_access.roles
+            operator: incl
+            value: api-admin
+    rules:
+      authentication:
+        "health-anonymous":
+          when:
+            - predicate: "request.path == '/q/health'"
+          anonymous: {}
+
+      authorization:
+        "route-authz":
+          when:
+            - predicate: "request.path != '/q/health'"
+          patternMatching:
+            patterns:
+              - any:
+                  - patternRef: pattern-reader
+                  - patternRef: pattern-admin
+        "route-health":
+          when:
+            - predicate: "request.method == 'GET'"
+            - predicate: "request.path == '/q/health'"
+          opa:
+            rego: "allow = true"
+
+        "route-reader":
+          when:
+            - predicate: "request.method == 'GET'"
+            - predicate: "request.path != '/q/health'"
+          patternMatching:
+            patterns:
+              - patternRef: pattern-reader
+
+        "route-admin":
+          when:
+            - predicate: "request.method != 'GET'"
+          patternMatching:
+            patterns:
+              - patternRef: pattern-admin

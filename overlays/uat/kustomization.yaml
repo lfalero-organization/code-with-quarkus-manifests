@@ -6,6 +6,6 @@ bases:
 
 images:
   - name: quarkus
-    # newName: image-registry.openshift-image-registry.svc:5000/atp-dev/code-with-quarkus
+    # newName: image-registry.openshift-image-registry.svc:5000/atp-qa/code-with-quarkus
     newName: quay.io/rh_ee_lfalero/code-with-quarkus
     newTag: 1.0.0
