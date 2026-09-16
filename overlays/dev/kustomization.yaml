@@ -6,6 +6,7 @@ bases:
   - http-route.yaml
   - auth-policy.yaml
   - dns-healthcheck.yaml
+  - rate-limit-policy.yaml
 
 images:
   - name: quarkus

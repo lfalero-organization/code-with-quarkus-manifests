@@ -1,0 +1,19 @@
+apiVersion: kuadrant.io/v1
+kind: RateLimitPolicy
+metadata:
+  name: code-with-quarkus-rlp
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: code-with-quarkus-route
+  defaults:
+    strategy: merge
+    limits:
+      # Límite diario por usuario autenticado (scraping/bulk)
+      "daily-ceiling":
+        rates:
+          - limit: 1000
+            window: 86400s # 24h
+        counters:
+          - expression: auth.identity.sub
