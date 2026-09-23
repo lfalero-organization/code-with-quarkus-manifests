@@ -13,7 +13,9 @@ spec:
       # Límite diario por usuario autenticado (scraping/bulk)
       "daily-ceiling":
         rates:
-          - limit: 1000
-            window: 86400s # 24h
+          - limit: 10
+            window: 60s # 24h
+          # - limit: 1000
+          #   window: 86400s # 24h
         counters:
           - expression: auth.identity.sub
