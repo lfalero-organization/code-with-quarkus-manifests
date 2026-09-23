@@ -1,7 +1,7 @@
 apiVersion: kuadrant.io/v1alpha1
 kind: DNSHealthCheckProbe
 metadata:
-  name: code-with-quarkus-healthcheck
+  name: code-with-quarkus
 spec:
   # address: bgbrep3.ng.impervadns.net
   hostname: quarkus.luisfalero.site

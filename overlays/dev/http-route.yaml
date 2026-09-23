@@ -1,44 +1,47 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: code-with-quarkus-route
+  name: code-with-quarkus
   labels:
     deployment: code-with-quarkus
     service: code-with-quarkus
 spec:
+  hostnames:
+    - "quarkus.luisfalero.site"
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: ingress-gateway
       namespace: api-gateway
       sectionName: api
-  hostnames:
-    - "quarkus.luisfalero.site"
   rules:
-    - matches:
-        - method: GET
-          path:
-            type: Exact
-            value: /q/health
-        - method: GET
-          path:
-            type: Exact
-            value: "/person"
-        - method: POST
-          path:
-            type: Exact
-            value: "/person"
-        - method: PUT
-          path:
-            type: PathPrefix
-            value: "/person/"
-        - method: DELETE
-          path:
-            type: PathPrefix
-            value: "/person/"
-      backendRefs:
+    - backendRefs:
         - group: ""
           kind: Service
           name: code-with-quarkus
           port: 8080
           weight: 1
+      matches:
+        - method: GET
+          path:
+            type: Exact
+            value: /q/health
+
+        - method: GET
+          path:
+            type: Exact
+            value: /person
+
+        - method: POST
+          path:
+            type: Exact
+            value: /person
+        - method: PUT
+          path:
+            type: PathPrefix
+            value: /person/
+
+        - method: DELETE
+          path:
+            type: PathPrefix
+            value: /person/

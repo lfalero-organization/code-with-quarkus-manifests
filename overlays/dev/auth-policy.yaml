@@ -1,12 +1,12 @@
 apiVersion: kuadrant.io/v1
 kind: AuthPolicy
 metadata:
-  name: code-with-quarkus-auth
+  name: code-with-quarkus
 spec:
   targetRef:
     group: gateway.networking.k8s.io
     kind: HTTPRoute
-    name: code-with-quarkus-route
+    name: code-with-quarkus
   defaults:
     strategy: merge
     patterns:
@@ -15,11 +15,13 @@ spec:
           - selector: auth.identity.realm_access.roles
             operator: incl
             value: api-reader
+
       "pattern-admin":
         allOf:
           - selector: auth.identity.realm_access.roles
             operator: incl
             value: api-admin
+
     rules:
       authentication:
         "health-anonymous":
@@ -36,6 +38,7 @@ spec:
               - any:
                   - patternRef: pattern-reader
                   - patternRef: pattern-admin
+
         "route-health":
           when:
             - predicate: "request.method == 'GET'"
