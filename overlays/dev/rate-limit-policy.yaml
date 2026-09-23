@@ -18,4 +18,4 @@ spec:
           # - limit: 1000
           #   window: 86400s # 24h
         counters:
-          - expression: auth.identity.sub
+          - expression: auth.identity.userid
