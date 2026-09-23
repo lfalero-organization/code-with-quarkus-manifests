@@ -1,12 +1,12 @@
 apiVersion: kuadrant.io/v1
 kind: RateLimitPolicy
 metadata:
-  name: code-with-quarkus-rlp
+  name: code-with-quarkus
 spec:
   targetRef:
     group: gateway.networking.k8s.io
     kind: HTTPRoute
-    name: code-with-quarkus-route
+    name: code-with-quarkus
   defaults:
     strategy: merge
     limits:
