@@ -3,7 +3,8 @@ kind: DNSHealthCheckProbe
 metadata:
   name: code-with-quarkus
 spec:
-  # address: bgbrep3.ng.impervadns.net
+  # address: bgbrep3.ng.impervadns.net # Dominio del WAF de Imperva
+  address: 52.224.148.24 # IP del Gateway
   hostname: quarkus.luisfalero.site
   path: /q/health
   port: 443
