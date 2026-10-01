@@ -26,13 +26,13 @@ spec:
       authentication:
         "health-anonymous":
           when:
-            - predicate: "request.path == '/lfalero/q/health'"
+            - predicate: "request.path == '/q/health'"
           anonymous: {}
 
       authorization:
         "route-authz":
           when:
-            - predicate: "request.path != '/lfalero/q/health'"
+            - predicate: "request.path != '/q/health'"
           patternMatching:
             patterns:
               - any:
@@ -42,14 +42,14 @@ spec:
         "route-health":
           when:
             - predicate: "request.method == 'GET'"
-            - predicate: "request.path == '/lfalero/q/health'"
+            - predicate: "request.path == '/q/health'"
           opa:
             rego: "allow = true"
 
         "route-reader":
           when:
             - predicate: "request.method == 'GET'"
-            - predicate: "request.path != '/lfalero/q/health'"
+            - predicate: "request.path != '/q/health'"
           patternMatching:
             patterns:
               - patternRef: pattern-reader
