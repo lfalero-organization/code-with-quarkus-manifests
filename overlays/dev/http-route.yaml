@@ -21,17 +21,11 @@ spec:
           name: code-with-quarkus
           port: 8080
           weight: 1
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: /q/health
       matches:
         - method: GET
           path:
             type: Exact
-            value: /lfalero/q/health
+            value: /q/health
 
     - backendRefs:
         - group: ""
@@ -49,18 +43,19 @@ spec:
         - method: GET
           path:
             type: Exact
-            value: /lfalero/person
+            value: /person
 
         - method: POST
           path:
             type: Exact
-            value: /lfalero/person
+            value: /person
+
         - method: PUT
           path:
-            type: RegularExpression
-            value: "^/lfalero/person/[^/]+$"
+            type: PathPrefix
+            value: /person/
 
         - method: DELETE
           path:
-            type: RegularExpression
-            value: "^/lfalero/person/[^/]+$"
+            type: PathPrefix
+            value: /person/
