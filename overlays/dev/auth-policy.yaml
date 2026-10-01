@@ -26,13 +26,19 @@ spec:
       authentication:
         "health-anonymous":
           when:
-            - predicate: "request.path == '/q/health'"
+            - predicate: >
+                (request.method == 'GET' && request.path == '/q/health') ||
+                (request.method == 'GET' && request.path == '/lfalero/q/health')
           anonymous: {}
 
       authorization:
         "route-authz":
           when:
-            - predicate: "request.path != '/q/health'"
+            - predicate: >
+                !(
+                  (request.method == 'GET' && request.path == '/q/health') ||
+                  (request.method == 'GET' && request.path == '/lfalero/q/health')                
+                )
           patternMatching:
             patterns:
               - any:
@@ -46,17 +52,41 @@ spec:
           opa:
             rego: "allow = true"
 
-        "route-reader":
+        "route-health-prefix":
           when:
             - predicate: "request.method == 'GET'"
-            - predicate: "request.path != '/q/health'"
+            - predicate: "request.path == '/lfalero/q/health'"
+          opa:
+            rego: "allow = true"
+
+        "get-person":
+          when:
+            - predicate: "request.method == 'GET'"
+            - predicate: "request.path == '/person'"
           patternMatching:
             patterns:
               - patternRef: pattern-reader
 
-        "route-admin":
+        "post-person":
           when:
-            - predicate: "request.method != 'GET'"
+            - predicate: "request.method == 'POST'"
+            - predicate: "request.path == '/person'"
+          patternMatching:
+            patterns:
+              - patternRef: pattern-admin
+
+        "put-person":
+          when:
+            - predicate: "request.method == 'PUT'"
+            - predicate: "request.path.matches('^/person/[^/]+$')"
+          patternMatching:
+            patterns:
+              - patternRef: pattern-admin
+
+        "delete-person":
+          when:
+            - predicate: "request.method == 'DELETE'"
+            - predicate: "request.path.matches('^/person/[^/]+$')"
           patternMatching:
             patterns:
               - patternRef: pattern-admin
